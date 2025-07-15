@@ -36,5 +36,6 @@ If you **copy apps** or **create new sheets**, the sheet ID **changes**.
 
 This can break things like **bookmarks** that rely on the original sheet location.
 
+<img width="1126" height="752" alt="image" src="https://github.com/user-attachments/assets/eba0b977-ba53-4c90-8131-3c681c056feb" />
 
 
