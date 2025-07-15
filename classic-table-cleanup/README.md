@@ -25,7 +25,9 @@ Did you know that sheets retain the **same ID** when you publish an app?
 That means you can map a published sheet back to its original just by comparing the URLs! 🔗
 
 **Example:**
+
 Published app: .../sense/app/A1B2C3/sheet/XYZ123
+
 Original app: .../sense/app/DEV456/sheet/XYZ123
 
 ---
