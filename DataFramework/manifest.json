@@ -1,5 +1,5 @@
 [
-  { "key": "ExtractShared", "value": "Extract" },
-  { "key": "TransformShared", "value": "Transform" },
-  { "key": "LoadShared", "value": "Load" }
+  { "key": "ExtractShared", "value": "Extract", "managed": "ExtractManaged" },
+  { "key": "TransformShared", "value": "Transform", "managed": "TransformManaged" },
+  { "key": "LoadShared", "value": "Load", "managed": "LoadManaged" }
 ]
