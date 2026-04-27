@@ -1,4 +1,4 @@
-{"Measures": [ { linebreak }{"Title":"Avg Sheet View Duration CM","Expression":""Interval(Avg({<SessionInCurrentMTD={1}>}SheetConsumptionOrderDuration))"","Label":"null","Color":"","NumFormat":"h:mm:ss","SegColor":" " },
+{"Measures": [{"Title":"Avg Sheet View Duration CM","Expression":""Interval(Avg({<SessionInCurrentMTD={1}>}SheetConsumptionOrderDuration))"","Label":"null","Color":"","NumFormat":"h:mm:ss","SegColor":" " },
 {"Title":"Concurrent Users by App","Expression":""Max(\r\n    Aggr(\n        Count({<ConsumptionConcurrencyMinute={\"*\"}>}DISTINCT SessionUserID),\n        ConsumptionConcurrencyMinute,\n        AppID\n    )\n)\n"","Label":"null","Color":"","NumFormat":"#,##0","SegColor":" " },
 {"Title":"Avg Sheet View Duration CM vs PMTD","Expression":""Interval([Avg Sheet View Duration CM] - [Avg Sheet View Duration PMTD])"","Label":"null","Color":"","NumFormat":"h:mm:ss","SegColor":" " },
 {"Title":"Sheet Users CM vs PMTD","Expression":""[Sheet Users CM]-[Sheet Users PMTD]"","Label":"null","Color":"","NumFormat":"#,##0","SegColor":" " },
