@@ -332,6 +332,6 @@ Count(DISTINCT SessionID)","Label":"","Color":"","NumFormat":"#,##0","SegColor":
         ConsumptionConcurrencyMinute
     )
 )","Label":"","Color":"","NumFormat":"#,##0","SegColor":" " },
-{"Title":"Sessions","Expression":"Count(DISTINCT SessionID)","Label":"","Color":"","NumFormat":"#,##0","SegColor":" " },
+{"Title":"Sessions","Expression":"Count(DISTINCT SessionID)","Label":"","Color":"","NumFormat":"#,##0","SegColor":" " }
 
 ]
