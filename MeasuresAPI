@@ -1,5 +1,4 @@
-"Measures": [
-{"Title":"Avg Sheet View Duration CM","Expression":"Interval(Avg({<SessionInCurrentMTD={1}>}SheetConsumptionOrderDuration))","Label":"","Color":"","NumFormat":"h:mm:ss","SegColor":" " },
+{"Measures": [ {linebreak}{"Title":"Avg Sheet View Duration CM","Expression":"Interval(Avg({<SessionInCurrentMTD={1}>}SheetConsumptionOrderDuration))","Label":"","Color":"","NumFormat":"h:mm:ss","SegColor":" " },
 {"Title":"Concurrent Users by App","Expression":"Max(
     Aggr(
         Count({<ConsumptionConcurrencyMinute={"*"}>}DISTINCT SessionUserID),
@@ -332,6 +331,4 @@ Count(DISTINCT SessionID)","Label":"","Color":"","NumFormat":"#,##0","SegColor":
         ConsumptionConcurrencyMinute
     )
 )","Label":"","Color":"","NumFormat":"#,##0","SegColor":" " },
-{"Title":"Sessions","Expression":"Count(DISTINCT SessionID)","Label":"","Color":"","NumFormat":"#,##0","SegColor":" " }
-
-]
+{"Title":"Sessions","Expression":"Count(DISTINCT SessionID)","Label":"","Color":"","NumFormat":"#,##0","SegColor":" " }]}
