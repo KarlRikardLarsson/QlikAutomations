@@ -1,4 +1,4 @@
-{"Measures": [ {linebreak}{"Title":"Avg Sheet View Duration CM","Expression":"Interval(Avg({<SessionInCurrentMTD={1}>}SheetConsumptionOrderDuration))","Label":"","Color":"","NumFormat":"h:mm:ss","SegColor":" " },
+{"Measures": [ {"Title":"Avg Sheet View Duration CM","Expression":"Interval(Avg({<SessionInCurrentMTD={1}>}SheetConsumptionOrderDuration))","Label":"","Color":"","NumFormat":"h:mm:ss","SegColor":" " },
 {"Title":"Concurrent Users by App","Expression":"Max(
     Aggr(
         Count({<ConsumptionConcurrencyMinute={"*"}>}DISTINCT SessionUserID),
