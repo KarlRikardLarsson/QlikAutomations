@@ -79,7 +79,7 @@
   },
   {
     "qName": "vD_LD",
-    "qDefinition": "='$(=DATE($(vD_MaxDate)-1,'DD.MM.YYYY'))'",
+    "qDefinition": "='$(=DATE($(vD_MaxDate)-1,'$(DateFormat)'))'",
     "description": "Yesterday relative to vD_MaxDate, formatted as DD.MM.YYYY text, for display in titles and labels.",
     "tags": "time, display"
   },
