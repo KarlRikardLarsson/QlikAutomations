@@ -7,14 +7,14 @@
   },
   {
     "qName": "vD_R_LY",
-    "qDefinition": ">=$(=ADDMONTHS(MAKEDATE($(vD_InputYear)-1,$(vD_InputMonth),1),($1 - 1) * -1))<=$(=MonthEnd(MAKEDATE($(vD_InputYear)-1,$(vD_InputMonth),1)))",
-    "description": "Parameterized rolling N-month window, shifted one year back from the current input month. Call as vD_R_LY(3), vD_R_LY(12), etc. Used as the template behind the *_LY convenience variables. Kept without a leading = or quotes so the $1 parameter substitution still works.",
+    "qDefinition": ">=$(=ADDMONTHS(MAKEDATE($(vD_InputYear)-1,$(vD_InputMonth),1),($1 - 1) * -1))<=$(=MAKEDATE($(vD_InputYear)-1,$(vD_InputMonth),$(vD_InputDay)))",
+    "description": "Parameterized rolling N-month window, shifted one year back from the current input month, ending on the same day-of-month as vD_MaxDate rather than the full month end. Call as vD_R_LY(3), vD_R_LY(12), etc. Used as the template behind the *_LY convenience variables. Kept without a leading = or quotes so the $1 parameter substitution still works.",
     "tags": "time, rolling, yoy"
   },
   {
     "qName": "vD_YTD",
-    "qDefinition": "='>=$(=MAKEDATE($(vD_InputYear),1,1))<=$(=MonthEnd(MakeDate($(vD_InputYear),$(vD_InputMonth),1)))'",
-    "description": "Year-to-date range for the current input year, from Jan 1 through the end of the current input month (month-grain, not day-grain — see earlier discussion on MonthEnd vs actual day).",
+    "qDefinition": "='>=$(=MAKEDATE($(vD_InputYear),1,1))<=$(=MakeDate($(vD_InputYear),$(vD_InputMonth),$(vD_InputDay)))'",
+    "description": "Year-to-date range for the current input year, from Jan 1 through the exact current day, using day-level precision instead of the end of the current month.",
     "tags": "time, calendar, ytd"
   },
   {
@@ -26,7 +26,7 @@
   {
     "qName": "vD_CY",
     "qDefinition": "='>=$(=(MAKEDATE($(vD_InputYear),1,1)))<=$(=(MonthEnd(MakeDate($(vD_InputYear),12,1))))'",
-    "description": "Full current calendar year range, Jan 1 to Dec 31, based on the current input year.",
+    "description": "Full current calendar year range, Jan 1 to Dec 31, based on the current input year. Always the complete year, so it is not affected by the day-level precision change applied to vD_R and vD_YTD.",
     "tags": "time, calendar"
   },
   {
@@ -38,25 +38,25 @@
   {
     "qName": "vD_LM",
     "qDefinition": "='>=$(=ADDMONTHS(MAKEDATE($(vD_InputYear),$(vD_InputMonth),1), -1))<=$(=MonthEnd(ADDMONTHS(MAKEDATE($(vD_InputYear),$(vD_InputMonth),1),-1)))'",
-    "description": "Last month: full calendar range for the month immediately preceding the current input month.",
+    "description": "Last month: full calendar range for the month immediately preceding the current input month. Kept at full month end intentionally, since last month is already complete and not a to-date period.",
     "tags": "time, calendar"
   },
   {
     "qName": "vD_R",
-    "qDefinition": ">=$(=ADDMONTHS(MAKEDATE($(vD_InputYear),$(vD_InputMonth),1),($1 - 1) * -1))<=$(=MonthEnd(MAKEDATE($(vD_InputYear),$(vD_InputMonth),1)))",
-    "description": "Core parameterized rolling N-month window ending at the current input month. Call as vD_R(3), vD_R(6), etc. This is the template underlying vD_R3, vD_R6, vD_R9, vD_R12, and vD_CM. Kept without a leading = or quotes so the $1 parameter substitution still works.",
+    "qDefinition": ">=$(=ADDMONTHS(MAKEDATE($(vD_InputYear),$(vD_InputMonth),1),($1 - 1) * -1))<=$(=MAKEDATE($(vD_InputYear),$(vD_InputMonth),$(vD_InputDay)))",
+    "description": "Core parameterized rolling N-month window ending on the exact current day (via vD_InputDay) rather than the full month end. Call as vD_R(3), vD_R(6), etc. This is the template underlying vD_R3, vD_R6, vD_R9, vD_R12, and vD_CM. Kept without a leading = or quotes so the $1 parameter substitution still works.",
     "tags": "time, rolling, core"
   },
   {
     "qName": "vD_R12",
     "qDefinition": "='$(vD_R(12))'",
-    "description": "Rolling 12-month window ending at the current input month. Convenience wrapper around vD_R(12).",
+    "description": "Rolling 12-month window ending at the current input day. Convenience wrapper around vD_R(12).",
     "tags": "time, rolling"
   },
   {
     "qName": "vD_R3_LY",
     "qDefinition": "='$(vD_R_LY(3))'",
-    "description": "Rolling 3-month window, shifted one year back. Convenience wrapper around vD_R_LY(3).",
+    "description": "Rolling 3-month window, shifted one year back, ending at the equivalent day last year. Convenience wrapper around vD_R_LY(3).",
     "tags": "time, rolling, yoy"
   },
   {
@@ -86,7 +86,7 @@
   {
     "qName": "vD_LY",
     "qDefinition": "='>=$(=(MAKEDATE($(vD_InputYear)-1,1,1)))<=$(=(MonthEnd(MakeDate($(vD_InputYear)-1,12,1))))'",
-    "description": "Last year: full calendar range, Jan 1 to Dec 31, for the year prior to the current input year.",
+    "description": "Last year: full calendar range, Jan 1 to Dec 31, for the year prior to the current input year. Always the complete year, so it is not affected by the day-level precision change applied to vD_R and vD_YTD.",
     "tags": "time, calendar, yoy"
   },
   {
@@ -98,25 +98,25 @@
   {
     "qName": "vD_R3",
     "qDefinition": "='$(vD_R(3))'",
-    "description": "Rolling 3-month window ending at the current input month. Convenience wrapper around vD_R(3).",
+    "description": "Rolling 3-month window ending at the current input day. Convenience wrapper around vD_R(3).",
     "tags": "time, rolling"
   },
   {
     "qName": "vD_R6",
     "qDefinition": "='$(vD_R(6))'",
-    "description": "Rolling 6-month window ending at the current input month. Convenience wrapper around vD_R(6).",
+    "description": "Rolling 6-month window ending at the current input day. Convenience wrapper around vD_R(6).",
     "tags": "time, rolling"
   },
   {
     "qName": "vD_R9",
     "qDefinition": "='$(vD_R(9))'",
-    "description": "Rolling 9-month window ending at the current input month. Convenience wrapper around vD_R(9).",
+    "description": "Rolling 9-month window ending at the current input day. Convenience wrapper around vD_R(9).",
     "tags": "time, rolling"
   },
   {
     "qName": "vD_R9_LY",
     "qDefinition": "='$(vD_R_LY(9))'",
-    "description": "Rolling 9-month window, shifted one year back. Convenience wrapper around vD_R_LY(9).",
+    "description": "Rolling 9-month window, shifted one year back, ending at the equivalent day last year. Convenience wrapper around vD_R_LY(9).",
     "tags": "time, rolling, yoy"
   },
   {
@@ -128,25 +128,25 @@
   {
     "qName": "vD_CM_LY",
     "qDefinition": "='$(vD_R_LY(1))'",
-    "description": "Current month, shifted one year back, i.e. the same calendar month last year. Convenience wrapper around vD_R_LY(1).",
+    "description": "Current month, shifted one year back, ending at the equivalent day last year, i.e. the same calendar month-to-date last year. Convenience wrapper around vD_R_LY(1).",
     "tags": "time, yoy"
   },
   {
     "qName": "vD_CM",
     "qDefinition": "='$(vD_R(1))'",
-    "description": "Current month range. Convenience wrapper around vD_R(1).",
+    "description": "Current month-to-date range, from the 1st through the current input day. Convenience wrapper around vD_R(1).",
     "tags": "time, calendar"
   },
   {
     "qName": "vD_R6_LY",
     "qDefinition": "='$(vD_R_LY(6))'",
-    "description": "Rolling 6-month window, shifted one year back. Convenience wrapper around vD_R_LY(6).",
+    "description": "Rolling 6-month window, shifted one year back, ending at the equivalent day last year. Convenience wrapper around vD_R_LY(6).",
     "tags": "time, rolling, yoy"
   },
   {
     "qName": "vD_R12_LY",
     "qDefinition": "='$(vD_R_LY(12))'",
-    "description": "Rolling 12-month window, shifted one year back. Convenience wrapper around vD_R_LY(12).",
+    "description": "Rolling 12-month window, shifted one year back, ending at the equivalent day last year. Convenience wrapper around vD_R_LY(12).",
     "tags": "time, rolling, yoy"
   },
   {
@@ -175,8 +175,8 @@
   },
   {
     "qName": "vD_YTD_LY",
-    "qDefinition": "='>=$(=MAKEDATE($(vD_InputYear)-1,1,1))<=$(=MonthEnd(MakeDate($(vD_InputYear)-1,$(vD_InputMonth),1)))'",
-    "description": "Year-to-date range for the year prior to the current input year, covering the same Jan-to-current-month span as vD_YTD but shifted back one year, for YTD year-over-year comparisons.",
+    "qDefinition": "='>=$(=MAKEDATE($(vD_InputYear)-1,1,1))<=$(=MakeDate($(vD_InputYear)-1,$(vD_InputMonth),$(vD_InputDay)))'",
+    "description": "Year-to-date range for the year prior to the current input year, from Jan 1 through the equivalent day last year, using day-level precision instead of the end of the current month.",
     "tags": "time, ytd, yoy"
   },
   {
