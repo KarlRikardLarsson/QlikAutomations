@@ -184,5 +184,11 @@
     "qDefinition": "=Day($(vD_MaxDate))",
     "description": "The active day used throughout all date variables, always derived from vD_MaxDate. No longer tied to a user field selection.",
     "tags": "time, core"
-  }
+  },
+{
+  "qName": "vD_RangeTitle",
+  "qDefinition": "Replace(Replace('$1','>=',''),'<=',' - ')",
+  "description": "Converts a raw range-string variable such as >=01.06.2026<=31.08.2026 into a readable label like 01.06.2026 - 31.08.2026, by stripping the >= and <= operators and inserting a dash. Call as vD_RangeTitle($(vD_R(3))) or vD_RangeTitle($(vD_YTD)), passing in the expanded range string of whichever period variable you want to label.",
+  "tags": "time, display, title"
+}
 ]
