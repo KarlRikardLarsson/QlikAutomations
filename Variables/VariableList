@@ -1,188 +1,188 @@
 [
   {
     "qName": "vD_MaxDate",
-    "qDefinition": "='$(=RangeMin(Max(Date),Today()))'",
-    "description": "The effective 'today' for the app: the latest date present in the data, capped at the real calendar date so it never shows a future date if data hasn't loaded yet. All other date-driven input variables derive from this.",
-    "tags": ["time", "anchor", "core"]
+    "qDefinition": "$(=RangeMin(Max(Date),Today()))",
+    "description": "The effective current date for the app: the latest date present in the data, capped at the real calendar date so it never shows a future date if data hasn't loaded yet. All other date-driven input variables derive from this.",
+    "tags": "time, anchor, core"
   },
   {
     "qName": "vD_R_LY",
     "qDefinition": ">=$(=ADDMONTHS(MAKEDATE($(vD_InputYear)-1,$(vD_InputMonth),1),($1 - 1) * -1))<=$(=MonthEnd(MAKEDATE($(vD_InputYear)-1,$(vD_InputMonth),1)))",
     "description": "Parameterized rolling N-month window, shifted one year back from the current input month. Call as vD_R_LY(3), vD_R_LY(12), etc. Used as the template behind the *_LY convenience variables.",
-    "tags": ["time", "rolling", "yoy"]
+    "tags": "time, rolling, yoy"
   },
   {
     "qName": "vD_YTD",
-    "qDefinition": "='>=$(=MAKEDATE($(vD_InputYear),1,1))<=$(=MonthEnd(MakeDate($(vD_InputYear),$(vD_InputMonth),1)))'",
+    "qDefinition": ">=$(=MAKEDATE($(vD_InputYear),1,1))<=$(=MonthEnd(MakeDate($(vD_InputYear),$(vD_InputMonth),1)))",
     "description": "Year-to-date range for the current input year, from Jan 1 through the end of the current input month (month-grain, not day-grain — see earlier discussion on MonthEnd vs actual day).",
-    "tags": ["time", "calendar", "ytd"]
+    "tags": "time, calendar, ytd"
   },
   {
     "qName": "vD_CD",
-    "qDefinition": "='$(=DATE($(vD_MaxDate),'DD.MM.YYYY'))'",
-    "description": "Current date, formatted as DD.MM.YYYY text, for display in titles/labels. Based on vD_MaxDate rather than the raw system date.",
-    "tags": ["time", "display"]
+    "qDefinition": "$(=DATE($(vD_MaxDate),'DD.MM.YYYY'))",
+    "description": "Current date, formatted as DD.MM.YYYY text, for display in titles and labels. Based on vD_MaxDate rather than the raw system date.",
+    "tags": "time, display"
   },
   {
     "qName": "vD_CY",
-    "qDefinition": "='>=$(=(MAKEDATE($(vD_InputYear),1,1)))<=$(=(MonthEnd(MakeDate($(vD_InputYear),12,1))))'",
-    "description": "Full current calendar year range (Jan 1 to Dec 31) based on the current input year.",
-    "tags": ["time", "calendar"]
+    "qDefinition": ">=$(=(MAKEDATE($(vD_InputYear),1,1)))<=$(=(MonthEnd(MakeDate($(vD_InputYear),12,1))))",
+    "description": "Full current calendar year range, Jan 1 to Dec 31, based on the current input year.",
+    "tags": "time, calendar"
   },
   {
     "qName": "vD_WeekRollingN",
     "qDefinition": ">=$(=date(weekstart(MAKEDATE($(vD_InputYear),$(vD_InputMonth),$(vD_InputDay)))-(7*$1)))<=$(=date(weekend(MAKEDATE($(vD_InputYear),$(vD_InputMonth),$(vD_InputDay)))))",
     "description": "Parameterized rolling N-week window ending at the end of the current week. Call as vD_WeekRollingN(4) for a trailing 4-week view, etc.",
-    "tags": ["time", "rolling"]
+    "tags": "time, rolling"
   },
   {
     "qName": "vD_LM",
-    "qDefinition": "='>=$(=ADDMONTHS(MAKEDATE($(vD_InputYear),$(vD_InputMonth),1), -1))<=$(=MonthEnd(ADDMONTHS(MAKEDATE($(vD_InputYear),$(vD_InputMonth),1),-1)))'",
+    "qDefinition": ">=$(=ADDMONTHS(MAKEDATE($(vD_InputYear),$(vD_InputMonth),1), -1))<=$(=MonthEnd(ADDMONTHS(MAKEDATE($(vD_InputYear),$(vD_InputMonth),1),-1)))",
     "description": "Last month: full calendar range for the month immediately preceding the current input month.",
-    "tags": ["time", "calendar"]
+    "tags": "time, calendar"
   },
   {
     "qName": "vD_R",
     "qDefinition": ">=$(=ADDMONTHS(MAKEDATE($(vD_InputYear),$(vD_InputMonth),1),($1 - 1) * -1))<=$(=MonthEnd(MAKEDATE($(vD_InputYear),$(vD_InputMonth),1)))",
     "description": "Core parameterized rolling N-month window ending at the current input month. Call as vD_R(3), vD_R(6), etc. This is the template underlying vD_R3, vD_R6, vD_R9, vD_R12, and vD_CM.",
-    "tags": ["time", "rolling", "core"]
+    "tags": "time, rolling, core"
   },
   {
     "qName": "vD_R12",
-    "qDefinition": "='$(vD_R(12))'",
+    "qDefinition": "$(vD_R(12))",
     "description": "Rolling 12-month window ending at the current input month. Convenience wrapper around vD_R(12).",
-    "tags": ["time", "rolling"]
+    "tags": "time, rolling"
   },
   {
     "qName": "vD_R3_LY",
-    "qDefinition": "='$(vD_R_LY(3))'",
+    "qDefinition": "$(vD_R_LY(3))",
     "description": "Rolling 3-month window, shifted one year back. Convenience wrapper around vD_R_LY(3).",
-    "tags": ["time", "rolling", "yoy"]
+    "tags": "time, rolling, yoy"
   },
   {
     "qName": "vD_Range",
     "qDefinition": "=$(=ONLY(Range))",
-    "description": "Reads the currently selected value from a 'Range' selector field (e.g. a dropdown of period labels like 'R3', 'YTD', 'CM'). Intended to drive dynamic period selection in charts, but currently has no dispatcher logic mapping the label to an actual date range variable — flagged for follow-up.",
-    "tags": ["time", "selector"]
+    "description": "Reads the currently selected value from a Range selector field, e.g. a dropdown of period labels such as R3, YTD, or CM. Intended to drive dynamic period selection in charts, but currently has no dispatcher logic mapping the label to an actual date range variable — flagged for follow-up.",
+    "tags": "time, selector"
   },
   {
     "qName": "vD_InputYear",
     "qDefinition": "=Year($(vD_MaxDate))",
     "description": "The active year used throughout all date variables, always derived from vD_MaxDate. No longer tied to a user field selection.",
-    "tags": ["time", "core"]
+    "tags": "time, core"
   },
   {
     "qName": "vD_Now",
     "qDefinition": "=Now()",
-    "description": "Live system timestamp (date + time), uncapped by data availability. Distinct from vD_MaxDate — use this only where an actual real-time timestamp is needed (e.g. 'last refreshed at').",
-    "tags": ["time", "timestamp"]
+    "description": "Live system timestamp, date and time, uncapped by data availability. Distinct from vD_MaxDate — use this only where an actual real-time timestamp is needed, e.g. a last-refreshed-at label.",
+    "tags": "time, timestamp"
   },
   {
     "qName": "vD_LD",
-    "qDefinition": "='$(=DATE($(vD_MaxDate)-1,'DD.MM.YYYY'))'",
-    "description": "Yesterday relative to vD_MaxDate, formatted as DD.MM.YYYY text, for display in titles/labels.",
-    "tags": ["time", "display"]
+    "qDefinition": "$(=DATE($(vD_MaxDate)-1,'DD.MM.YYYY'))",
+    "description": "Yesterday relative to vD_MaxDate, formatted as DD.MM.YYYY text, for display in titles and labels.",
+    "tags": "time, display"
   },
   {
     "qName": "vD_LY",
-    "qDefinition": "='>=$(=(MAKEDATE($(vD_InputYear)-1,1,1)))<=$(=(MonthEnd(MakeDate($(vD_InputYear)-1,12,1))))'",
-    "description": "Last year: full calendar range (Jan 1 to Dec 31) for the year prior to the current input year.",
-    "tags": ["time", "calendar", "yoy"]
+    "qDefinition": ">=$(=(MAKEDATE($(vD_InputYear)-1,1,1)))<=$(=(MonthEnd(MakeDate($(vD_InputYear)-1,12,1))))",
+    "description": "Last year: full calendar range, Jan 1 to Dec 31, for the year prior to the current input year.",
+    "tags": "time, calendar, yoy"
   },
   {
     "qName": "vD_WeekLastN",
     "qDefinition": ">=$(=date(weekstart(MAKEDATE($(vD_InputYear),$(vD_InputMonth),$(vD_InputDay)))-(7*$1)))<=$(=date(weekend(MAKEDATE($(vD_InputYear),$(vD_InputMonth),$(vD_InputDay)))-(7*$1)))",
-    "description": "The single full week that occurred exactly N weeks before the current week (not a rolling range — one specific past week). Call as vD_WeekLastN(1) for last week, vD_WeekLastN(2) for two weeks ago, etc.",
-    "tags": ["time", "comparison"]
+    "description": "The single full week that occurred exactly N weeks before the current week, not a rolling range but one specific past week. Call as vD_WeekLastN(1) for last week, vD_WeekLastN(2) for two weeks ago, etc.",
+    "tags": "time, comparison"
   },
   {
     "qName": "vD_R3",
-    "qDefinition": "='$(vD_R(3))'",
+    "qDefinition": "$(vD_R(3))",
     "description": "Rolling 3-month window ending at the current input month. Convenience wrapper around vD_R(3).",
-    "tags": ["time", "rolling"]
+    "tags": "time, rolling"
   },
   {
     "qName": "vD_R6",
-    "qDefinition": "='$(vD_R(6))'",
+    "qDefinition": "$(vD_R(6))",
     "description": "Rolling 6-month window ending at the current input month. Convenience wrapper around vD_R(6).",
-    "tags": ["time", "rolling"]
+    "tags": "time, rolling"
   },
   {
     "qName": "vD_R9",
-    "qDefinition": "='$(vD_R(9))'",
+    "qDefinition": "$(vD_R(9))",
     "description": "Rolling 9-month window ending at the current input month. Convenience wrapper around vD_R(9).",
-    "tags": ["time", "rolling"]
+    "tags": "time, rolling"
   },
   {
     "qName": "vD_R9_LY",
-    "qDefinition": "='$(vD_R_LY(9))'",
+    "qDefinition": "$(vD_R_LY(9))",
     "description": "Rolling 9-month window, shifted one year back. Convenience wrapper around vD_R_LY(9).",
-    "tags": ["time", "rolling", "yoy"]
+    "tags": "time, rolling, yoy"
   },
   {
     "qName": "vD_InputMonth",
     "qDefinition": "=Month($(vD_MaxDate))",
     "description": "The active month used throughout all date variables, always derived from vD_MaxDate. No longer tied to a user field selection.",
-    "tags": ["time", "core"]
+    "tags": "time, core"
   },
   {
     "qName": "vD_CM_LY",
-    "qDefinition": "='$(vD_R_LY(1))'",
-    "description": "Current month, shifted one year back — i.e. the same calendar month last year. Convenience wrapper around vD_R_LY(1).",
-    "tags": ["time", "yoy"]
+    "qDefinition": "$(vD_R_LY(1))",
+    "description": "Current month, shifted one year back, i.e. the same calendar month last year. Convenience wrapper around vD_R_LY(1).",
+    "tags": "time, yoy"
   },
   {
     "qName": "vD_CM",
-    "qDefinition": "='$(vD_R(1))'",
+    "qDefinition": "$(vD_R(1))",
     "description": "Current month range. Convenience wrapper around vD_R(1).",
-    "tags": ["time", "calendar"]
+    "tags": "time, calendar"
   },
   {
     "qName": "vD_R6_LY",
-    "qDefinition": "='$(vD_R_LY(6))'",
+    "qDefinition": "$(vD_R_LY(6))",
     "description": "Rolling 6-month window, shifted one year back. Convenience wrapper around vD_R_LY(6).",
-    "tags": ["time", "rolling", "yoy"]
+    "tags": "time, rolling, yoy"
   },
   {
     "qName": "vD_R12_LY",
-    "qDefinition": "='$(vD_R_LY(12))'",
+    "qDefinition": "$(vD_R_LY(12))",
     "description": "Rolling 12-month window, shifted one year back. Convenience wrapper around vD_R_LY(12).",
-    "tags": ["time", "rolling", "yoy"]
+    "tags": "time, rolling, yoy"
   },
   {
     "qName": "vD_RangeCompare",
     "qDefinition": "=$(=ONLY(\"Range Compare\"))",
-    "description": "Reads the currently selected value from a 'Range Compare' selector field, intended to pair with vD_Range for period-over-period comparisons (e.g. this R3 vs last year's R3). Same dispatcher gap as vD_Range.",
-    "tags": ["time", "selector", "comparison"]
+    "description": "Reads the currently selected value from a Range Compare selector field, intended to pair with vD_Range for period-over-period comparisons, e.g. this R3 vs last year's R3. Same dispatcher gap as vD_Range.",
+    "tags": "time, selector, comparison"
   },
   {
     "qName": "vD_DayLastN",
     "qDefinition": ">=$(=date(MAKEDATE($(vD_InputYear),$(vD_InputMonth),$(vD_InputDay))+$1))<=$(=date(MAKEDATE($(vD_InputYear),$(vD_InputMonth),$(vD_InputDay))+$1))",
-    "description": "A single day, offset by $1 days from the current input day. Note the definition adds $1 rather than subtracting, so a negative parameter is needed to go backward in time (e.g. vD_DayLastN(-1) for yesterday).",
-    "tags": ["time", "day"]
+    "description": "A single day, offset by $1 days from the current input day. Note the definition adds $1 rather than subtracting, so a negative parameter is needed to go backward in time, e.g. vD_DayLastN(-1) for yesterday.",
+    "tags": "time, day"
   },
   {
     "qName": "vD_DayNofCurrentWeek",
     "qDefinition": ">=$(=date(weekstart(MAKEDATE($(vD_InputYear),$(vD_InputMonth),$(vD_InputDay))) + $1 ))<=$(=date(weekstart(MAKEDATE($(vD_InputYear),$(vD_InputMonth),$(vD_InputDay))) + $1))",
-    "description": "A single specific day within the current week, offset $1 days from that week's start (e.g. vD_DayNofCurrentWeek(0) for Monday, vD_DayNofCurrentWeek(2) for Wednesday, depending on week-start convention).",
-    "tags": ["time", "day"]
+    "description": "A single specific day within the current week, offset $1 days from that week's start, e.g. vD_DayNofCurrentWeek(0) for Monday, vD_DayNofCurrentWeek(2) for Wednesday, depending on week-start convention.",
+    "tags": "time, day"
   },
   {
     "qName": "vD_WeekLastN_ToDate",
     "qDefinition": ">=$(=date(weekstart(MAKEDATE($(vD_InputYear),$(vD_InputMonth),$(vD_InputDay)))-(7*$1)))<=$(=date(MAKEDATE($(vD_InputYear),$(vD_InputMonth),$(vD_InputDay))-(7*$1)))",
-    "description": "The portion of the week N weeks ago, from that week's start through the day-of-week matching today's position — a 'to-date' comparison window rather than the full past week.",
-    "tags": ["time", "comparison"]
+    "description": "The portion of the week N weeks ago, from that week's start through the day-of-week matching today's position: a to-date comparison window rather than the full past week.",
+    "tags": "time, comparison"
   },
   {
     "qName": "vD_YTD_LY",
-    "qDefinition": "='>=$(=MAKEDATE($(vD_InputYear)-1,1,1))<=$(=MonthEnd(MakeDate($(vD_InputYear)-1,$(vD_InputMonth),1)))'",
-    "description": "Year-to-date range for the year prior to the current input year, covering the same Jan-to-current-month span as vD_YTD but shifted back one year — for YTD year-over-year comparisons.",
-    "tags": ["time", "ytd", "yoy"]
+    "qDefinition": ">=$(=MAKEDATE($(vD_InputYear)-1,1,1))<=$(=MonthEnd(MakeDate($(vD_InputYear)-1,$(vD_InputMonth),1)))",
+    "description": "Year-to-date range for the year prior to the current input year, covering the same Jan-to-current-month span as vD_YTD but shifted back one year, for YTD year-over-year comparisons.",
+    "tags": "time, ytd, yoy"
   },
   {
     "qName": "vD_InputDay",
     "qDefinition": "=Day($(vD_MaxDate))",
     "description": "The active day used throughout all date variables, always derived from vD_MaxDate. No longer tied to a user field selection.",
-    "tags": ["time", "core"]
+    "tags": "time, core"
   }
 ]
