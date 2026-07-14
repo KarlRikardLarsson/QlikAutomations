@@ -19,7 +19,7 @@
   },
   {
     "qName": "vD_CD",
-    "qDefinition": "='$(=DATE($(vD_MaxDate),'DD.MM.YYYY'))'",
+    "qDefinition": "='$(=DATE($(vD_MaxDate),'$(DateFormat)))'",
     "description": "Current date, formatted as DD.MM.YYYY text, for display in titles and labels. Based on vD_MaxDate rather than the raw system date.",
     "tags": "time, display"
   },
